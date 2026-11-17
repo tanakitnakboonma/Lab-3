@@ -11,9 +11,9 @@ Common-Emitter สามแบบ ภายใต้สมมติฐาน For
 
 ## GitHub และ Commit
 
-- Repository: https://github.com/tanakitnakboonma/gitlab
-- โฟลเดอร์งาน: `lab03/`
-- Commit ของ Lab 03: `4d80defc9060844e010a5ab31beb71066b8eb685`
+- Repository: https://github.com/tanakitnakboonma/Lab-3
+- โฟลเดอร์งาน: root ของ repository (เนื้อหาของ `lab03/` ทั้งหมด)
+- Commit ของ Lab 03: commit ล่าสุดบน branch `main` (ดูแท็บ Commits)
 
 ## ภาพหน้าจอ
 

@@ -77,5 +77,6 @@ $ git status --short
 ?? lab03/
 ```
 
-Implemented in commit `4d80defc9060844e010a5ab31beb71066b8eb685`
-("feat(lab03): add Fixed and Emitter bias modes with browser validation").
+Implemented in commits `4d80def` and `5533c4c` of the development repository.
+The published Lab 03 repository (https://github.com/tanakitnakboonma/Lab-3)
+contains the same tree with `lab03/` as its root.
