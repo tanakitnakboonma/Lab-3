@@ -76,3 +76,6 @@ $ git status --short
 ?? docs/superpowers/specs/2026-11-17-lab03-bjt-bias-design.md
 ?? lab03/
 ```
+
+Implemented in commit `4d80defc9060844e010a5ab31beb71066b8eb685`
+("feat(lab03): add Fixed and Emitter bias modes with browser validation").

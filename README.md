@@ -9,6 +9,12 @@ Common-Emitter สามแบบ ภายใต้สมมติฐาน For
 | Fixed Bias | RB |
 | Emitter Bias (แหล่งจ่ายเดียว) | RB, RE |
 
+## GitHub และ Commit
+
+- Repository: https://github.com/tanakitnakboonma/gitlab
+- โฟลเดอร์งาน: `lab03/`
+- Commit ของ Lab 03: `4d80defc9060844e010a5ab31beb71066b8eb685`
+
 ## ภาพหน้าจอ
 
 Voltage Divider (A1):
