@@ -1,0 +1,78 @@
+﻿# Verification evidence — Lab 03 BJT DC Bias Web App
+
+Date: 2026-11-17
+Machine: Windows 11, Python 3.14.2, Flask 3.1.3
+
+## 1. Automated regression tests (Lab 02 suite, unchanged)
+
+```text
+$ python -m unittest discover -s tests -v
+test_converts_kohm_to_ohm ... ok
+test_example_circuit ... ok
+test_cutoff_when_vth_below_vbe ... ok
+test_forward_active_has_no_warning ... ok
+test_saturation_when_vce_below_limit ... ok
+test_invalid_beta ... ok
+test_kohm_to_ohm_names_the_field ... ok
+test_kohm_to_ohm_rejects_bad_values ... ok
+test_negative_vbe ... ok
+test_non_finite ... ok
+test_non_numeric_blank_and_malformed ... ok
+test_zero_or_negative_components ... ok
+test_get_form ... ok
+test_page_states_model_assumptions ... ok
+test_page_uses_mockup_layout ... ok
+test_post_active_shows_ok_status ... ok
+test_post_blank_field_shows_error ... ok
+test_post_cutoff_shows_warning ... ok
+test_post_invalid_shows_error ... ok
+test_post_keeps_submitted_values ... ok
+test_post_missing_field_shows_error ... ok
+test_post_saturation_shows_warning ... ok
+test_post_valid_shows_results ... ok
+test_units_and_stylesheet_are_linked ... ok
+----------------------------------------------------------------------
+Ran 24 tests in 0.112s
+
+OK
+```
+
+Same suite also passes in `lab02/` (24 tests, OK) — Lab 02 was not modified.
+
+## 2. Flask server used for browser acceptance
+
+```text
+$ python -m flask --app app run --port 5050
+ * Serving Flask app 'app'
+ * Debug mode: off
+ * Running on http://127.0.0.1:5050
+```
+
+Port 5000 was already occupied by the old Lab 02 dev server, so Lab 03 uses 5050.
+
+## 3. Browser acceptance run
+
+Method: **OpenCode Browser** tool (Chromium inside OpenCode Desktop).
+Playwright MCP: **NOT RUN** — `node --version` / `npx --version` are not
+available on this machine, so the MCP server cannot start.
+
+| ID | Inputs | Observed on the page | Status |
+|---|---|---|---|
+| A1 | Divider · R1 100, R2 22, RE 1 kΩ | IC 1.230 mA · VCE 8.052 V | PASS |
+| A2 | Fixed · RB 1000 kΩ | IC 1.130 mA · VCE 9.514 V (no RE field) | PASS |
+| A3 | Emitter · RB 1000, RE 1 kΩ | IC 1.026 mA · VCE 8.705 V | PASS |
+| A4 | Emitter · RB 1000, RE 2 kΩ | IC 0.940 mA · VCE 8.033 V (decreased from A3) | PASS |
+| A5 | Fixed · RB 0 | error "RB ต้องมากกว่าศูนย์ (kΩ)", no result table | PASS |
+
+Evidence images: `docs/browser-a1-divider.jpeg`, `docs/browser-a5-fixed-rb0.jpeg`.
+Full table and independent hand calculations: `docs/validation.md`.
+
+## 4. Git status before commit
+
+```text
+$ git status --short
+ M README.md
+?? docs/superpowers/plans/2026-11-17-lab03-bjt-bias-modes.md
+?? docs/superpowers/specs/2026-11-17-lab03-bjt-bias-design.md
+?? lab03/
+```
