@@ -1,9 +1,12 @@
 # Brainstorm & Planning — Lab 02 BJT DC Bias Web App
 
 ไฟล์นี้สรุปการระดมความคิดก่อนลงมือ ทางเลือกที่พิจารณา เหตุผลที่เลือก
-และความเสี่ยงที่วางแผนรับมือไว้ ใช้คู่กับ
-`docs/superpowers/specs/2026-11-10-lab02-bjt-dc-bias-design.md` (spec)
-และ `docs/superpowers/plans/2026-11-10-lab02-bjt-dc-bias.md` (แผน 7 tasks)
+และความเสี่ยงที่วางแผนรับมือไว้ ใช้คู่กับสเปก/แผนของ Lab 03 ใน
+`docs/superpowers/specs/2026-11-17-lab03-bjt-bias-design.md` (spec)
+และ `docs/superpowers/plans/2026-11-17-lab03-bjt-bias-modes.md` (แผน)
+
+> ส่วน Lab 02 ด้านล่างเก็บไว้เป็นประวัติการตัดสินใจ; ไฟล์ spec/plan ของ Lab 02
+> อยู่ใน repository รวมของรายวิชา ไม่ได้คัดลอกมาที่นี่
 
 ## 1. โจทย์และข้อจำกัด
 

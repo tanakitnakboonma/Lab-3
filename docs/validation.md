@@ -108,7 +108,9 @@ dict `{ic, vce, ...}` → template แสดง `IC` เป็น mA และ `
 ## 4. Automated tests (regression ของ Lab 02)
 
 ```powershell
-python -m unittest discover -s lab03/tests -t lab03 -v
+# จากรากของ repository นี้
+python -m unittest discover -s tests -v
+# หรือจาก root ของ repo รวม: python -m unittest discover -s lab03/tests -t lab03 -v
 ```
 
 ผลจริง: **24 tests, OK** — ชุดทดสอบเดิมของ Lab 02 ยังผ่านทั้งหมด

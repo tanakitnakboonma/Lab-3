@@ -8,11 +8,11 @@
 ## Commands
 
 ```powershell
-# จาก lab03/
+# จากรากของ repository (โฟลเดอร์ที่มี app.py)
 python -m unittest discover -s tests -v
 python -m flask --app app run --port 5050
 
-# จาก root repo
+# จาก root ของ repo รวม gitlab/
 python -m unittest discover -s lab03/tests -t lab03 -v
 ```
 

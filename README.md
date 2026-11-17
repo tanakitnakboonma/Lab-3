@@ -28,7 +28,7 @@ Voltage Divider (A1):
 ## โครงสร้างโปรเจกต์
 
 ```
-lab03/
+(รากของ repository นี้)
 ├── app.py                  # Flask routes, mode dispatch, kΩ → Ω
 ├── dc_bias.py              # pure engineering calculations (3 functions)
 ├── templates/index.html    # mode select + per-mode form + results
@@ -43,7 +43,10 @@ lab03/
     ├── validation.md           # ค่าอ้างอิสระ + ผลตรวจ A1–A5
     ├── brainstorm.md           # ทางเลือกและเหตุผล (Lab 02 → Lab 03)
     ├── browser-a1-divider.jpeg # หลักฐานจาก Browser (A1)
-    └── browser-a5-fixed-rb0.jpeg # หลักฐานจาก Browser (A5)
+    ├── browser-a5-fixed-rb0.jpeg # หลักฐานจาก Browser (A5)
+    └── superpowers/
+        ├── specs/2026-11-17-lab03-bjt-bias-design.md
+        └── plans/2026-11-17-lab03-bjt-bias-modes.md
 ```
 
 ## สิ่งที่ต้องมี
@@ -56,7 +59,6 @@ lab03/
 ## ติดตั้งและรัน (Windows PowerShell)
 
 ```powershell
-cd lab03
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
@@ -71,7 +73,6 @@ python -m flask --app app run --port 5050
 ## ติดตั้งและรัน (macOS / Linux)
 
 ```bash
-cd lab03
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -89,13 +90,13 @@ RB = 1 MΩ ให้กรอก `1000` (kΩ)
 
 ## รัน Automated Tests
 
-จากในโฟลเดอร์ `lab03/`:
+จากรากของ repository นี้ (โฟลเดอร์ที่มี `app.py`):
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-หรือจาก root ของ repository:
+ถ้าอยู่ใน repo รวมของรายวิชา (`gitlab/`) ให้รันจาก root แทน:
 
 ```powershell
 python -m unittest discover -s lab03/tests -t lab03 -v
@@ -184,7 +185,7 @@ VCC = 12 V, RC = 2.2 kΩ, β = 100, VBE = 0.70 V
 | โครงสร้างและ Python (แยกฟังก์ชัน, เลือกตามโหมด, dict) | `dc_bias.py`, `app.py`, `docs/design-note.md` §2–§5 |
 | วิศวกรรมและการคงผลเดิม | `docs/validation.md` §1, `tests/` (24 tests), ค่า A1 ตรงกับ Lab 02 |
 | ตรวจฟอร์มและผลจาก Browser | `docs/validation.md` §2, `docs/browser-a1-divider.jpeg`, `docs/browser-a5-fixed-rb0.jpeg` |
-| ส่งงานและทำซ้ำได้ | `README.md`, GitHub URL + commit SHA, `/docs/superpowers/` |
+| ส่งงานและทำซ้ำได้ | `README.md`, GitHub URL + commit SHA, `docs/superpowers/` |
 
 ## แก้ปัญหาที่พบบ่อย
 

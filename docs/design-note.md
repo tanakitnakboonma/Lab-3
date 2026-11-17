@@ -106,8 +106,8 @@ VE  = IE·RE
 
 ## 6. เอกสารอ้างอิง
 
-- ทางเลือกและเหตุผล: `lab03/docs/brainstorm.md` §6
-- ผลตรวจ A1–A5 และค่าอ้างอิสระ: `lab03/docs/validation.md`
+- ทางเลือกและเหตุผล: `docs/brainstorm.md` §6
+- ผลตรวจ A1–A5 และค่าอ้างอิสระ: `docs/validation.md`
 - Design ฉบับเต็ม: `docs/superpowers/specs/2026-11-17-lab03-bjt-bias-design.md`
 - แผนพัฒนา: `docs/superpowers/plans/2026-11-17-lab03-bjt-bias-modes.md`
-- ใบงาน: `lab03/docs/lab03-assignment.html`
+- ใบงาน: `docs/lab03-assignment.html`
