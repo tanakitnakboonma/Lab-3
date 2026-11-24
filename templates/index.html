@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lab 03: BJT DC Bias Web App</title>
+  <title>Lab 04: BJT CE Amplifier Simulator</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -19,18 +19,27 @@
           </g>
         </svg>
         <div class="brand-text">
-          <h1>Lab 03: BJT DC Bias Web App</h1>
-          <p class="subtitle">ENG29 2121 – Common Emitter (Three Bias Circuits)</p>
+          <h1>Lab 04: BJT CE Amplifier Simulator</h1>
+          <p class="subtitle">ENG29 2121 – Real ngspice .op / .ac / .tran results, with Lab 03 bias calculations kept as a reference</p>
         </div>
       </div>
       <p class="course-badge">Computer Programming for Electrical Engineers</p>
     </header>
 
+    <nav class="workspace-tabs" aria-label="Workspace">
+      <a class="workspace-tab{% if workspace == 'bias' %} active{% endif %}"
+         href="{{ url_for('index', workspace='bias') }}">DC Bias (Lab 3)</a>
+      <a class="workspace-tab{% if workspace == 'simulator' %} active{% endif %}"
+         href="{{ url_for('index', workspace='simulator', analysis=analysis) }}">CE Simulator (Lab 4)</a>
+    </nav>
+
     <main class="layout">
+      {% if workspace == 'bias' %}
       <section class="panel input-panel">
         <h2>Input Parameters</h2>
 
         <form class="mode-form" action="{{ url_for('index') }}" method="get">
+          <input type="hidden" name="workspace" value="bias">
           <div class="field">
             <label class="field-label" for="mode">Bias circuit</label>
             <select id="mode" name="mode" class="mode-select">
@@ -204,13 +213,233 @@
 
         <p class="model-note">Model assumptions: Forward-Active approximation, constant β and VBE, ideal resistors.</p>
       </section>
+
+      {% else %}
+      <section class="panel input-panel">
+        <h2>Input Parameters</h2>
+
+        <form class="mode-form" action="{{ url_for('index') }}" method="get">
+          <input type="hidden" name="workspace" value="simulator">
+          <div class="field">
+            <label class="field-label" for="analysis">ngspice analysis</label>
+            <select id="analysis" name="analysis" class="mode-select">
+              {% for value, label in analyses %}
+                <option value="{{ value }}"{% if value == analysis %} selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button class="mode-button" type="submit">Load form</button>
+        </form>
+
+        <p class="hint">Resistances kΩ · capacitors µF · amplitude mV peak · frequency kHz · duration ms. Values are converted to SI before ngspice.</p>
+
+        <form action="{{ url_for('simulate') }}" method="post">
+          <input type="hidden" name="analysis" value="{{ analysis }}">
+          <div class="fields">
+            {% for name in sim_fields %}
+              <div class="field{% if name == 'vcc' %} wide{% endif %}">
+                <label class="field-label" for="sim-{{ name }}">
+                  {{ field_labels[name] }} <span class="unit">{{ field_units[name] }}</span>
+                </label>
+                <input id="sim-{{ name }}" name="{{ name }}" inputmode="decimal"
+                       autocomplete="off" value="{{ sim_form[name] }}">
+              </div>
+            {% endfor %}
+          </div>
+          <button class="calculate" type="submit">Run ngspice {{ analysis|upper }}</button>
+        </form>
+
+        <details class="provenance">
+          <summary>Engine and model</summary>
+          <p>Engine: <strong>{{ engine_name }}</strong> · BJT model: <strong>{{ model_name }}</strong></p>
+          <p class="model-note">The model is a generic teaching Gummel-Poon NPN, not a commercial part number. Its parameters are printed in the netlist below so a run is reproducible.</p>
+        </details>
+      </section>
+
+      <section class="panel circuit-panel">
+        <h2>Circuit: Common-Emitter Amplifier</h2>
+        <svg class="schematic simulator-schematic" viewBox="0 0 400 330" role="img"
+             aria-label="Voltage-divider biased NPN common-emitter amplifier with coupling capacitors and load resistor">
+          <g class="wire">
+            <path d="M40 32H340"></path>
+            <path d="M110 32V58M110 98V176M110 176H180"></path>
+            <path d="M270 32V58M270 98V140M270 140H208M208 140V152"></path>
+            <path d="M180 166L208 152"></path>
+            <path d="M180 186L208 200V218M208 258V292"></path>
+            <path d="M110 176V206M110 246V292"></path>
+            <path d="M110 292H208"></path>
+            <path d="M40 176H70"></path>
+            <path d="M300 176H330"></path>
+            <path d="M330 176V292H300"></path>
+          </g>
+
+          <g class="component">
+            <rect x="100" y="58" width="20" height="40" rx="3"></rect>
+            <rect x="100" y="206" width="20" height="40" rx="3"></rect>
+            <rect x="260" y="58" width="20" height="40" rx="3"></rect>
+            <rect x="198" y="218" width="20" height="40" rx="3"></rect>
+            <path class="capacitor" d="M74 168h20M74 184h20"></path>
+            <path class="capacitor" d="M304 168h20M304 184h20"></path>
+            <rect x="292" y="230" width="16" height="44" rx="3"></rect>
+          </g>
+
+          <g class="transistor">
+            <circle cx="205" cy="176" r="30"></circle>
+            <path d="M180 158V194"></path>
+            <path class="arrow" d="M186 190L201 198L196 185Z"></path>
+          </g>
+
+          <g class="node">
+            <circle cx="110" cy="176" r="3.2"></circle>
+            <circle cx="208" cy="140" r="3.2"></circle>
+            <circle cx="208" cy="214" r="3.2"></circle>
+          </g>
+
+          <g class="ground">
+            <path d="M159 292V300M147 300H171M150 305H168M154 310H164"></path>
+          </g>
+
+          <g class="label">
+            <text class="ref" x="88" y="70" text-anchor="end">R1</text>
+            <text x="88" y="86" text-anchor="end">{{ sim_form.r1 }} kΩ</text>
+            <text class="ref" x="88" y="218" text-anchor="end">R2</text>
+            <text x="88" y="234" text-anchor="end">{{ sim_form.r2 }} kΩ</text>
+            <text class="ref" x="300" y="70">RC</text>
+            <text x="300" y="86">{{ sim_form.rc }} kΩ</text>
+            <text class="ref" x="230" y="230">RE</text>
+            <text x="230" y="246">{{ sim_form.re }} kΩ</text>
+            <text class="ref" x="66" y="160" text-anchor="middle">Cin</text>
+            <text class="ref" x="316" y="160" text-anchor="middle">Cout</text>
+            <text class="ref" x="330" y="250">RL</text>
+            <text x="330" y="266">{{ sim_form.rl }} kΩ</text>
+            <text class="ref" x="243" y="170">Q1</text>
+            <text class="ref" x="190" y="22" text-anchor="middle">VCC = {{ sim_form.vcc }} V</text>
+          </g>
+        </svg>
+        <p class="schematic-caption">Vin is measured after Cin at the base; Vout is measured across RL after Cout.</p>
+
+        {% if sim_result %}
+        <details class="provenance">
+          <summary>Netlist used for this run ({{ engine_name }} · {{ model_name }})</summary>
+          <pre>{{ sim_result.netlist }}</pre>
+        </details>
+        <details class="provenance">
+          <summary>Run command and log</summary>
+          <pre>{{ sim_result.command|join(' ') }}</pre>
+          <pre>{{ sim_result.log }}</pre>
+        </details>
+        {% endif %}
+      </section>
+
+      <section class="panel results-panel simulator-results">
+        <h2>{{ analysis_label }}</h2>
+        <p class="mode-tag">Simulator mode: <strong>{{ analysis_label }}</strong></p>
+
+        {% if sim_error %}
+          <div class="error">{{ sim_error }}</div>
+          <div class="status idle">
+            <span class="status-title">Run rejected</span>
+            <span>No stale or previous results are shown. Fix the input and run again.</span>
+          </div>
+        {% elif sim_result %}
+          <div class="status ok">
+            <span class="status-title">Run status: {{ sim_result.status|upper }}</span>
+            <span>{{ sim_result.engine }} · model {{ sim_result.model }} · {{ sim_result.analysis|upper }} · data from this run only.</span>
+          </div>
+
+          {% if analysis == 'dc' %}
+            <h3 class="result-subhead">DC operating point from ngspice</h3>
+            <table class="results">
+              <tbody>
+                <tr><th>VB</th><td>{{ "%.4f"|format(sim_result.data.vb) }} V</td></tr>
+                <tr><th>VE</th><td>{{ "%.4f"|format(sim_result.data.ve) }} V</td></tr>
+                <tr><th>VC</th><td>{{ "%.4f"|format(sim_result.data.vc) }} V</td></tr>
+                <tr><th>VBE</th><td>{{ "%.4f"|format(sim_result.data.vbe) }} V</td></tr>
+                <tr><th>VCE</th><td>{{ "%.4f"|format(sim_result.data.vce) }} V</td></tr>
+                <tr><th>IB</th><td>{{ "%.4f"|format(sim_result.data.ib * 1000000) }} µA</td></tr>
+                <tr><th>IC</th><td>{{ "%.4f"|format(sim_result.data.ic * 1000) }} mA</td></tr>
+                <tr><th>IE</th><td>{{ "%.4f"|format(sim_result.data.ie * 1000) }} mA</td></tr>
+              </tbody>
+            </table>
+            <p class="provenance-line">Source: {{ sim_result.data.currents_source }}; IE = IB + IC; VBE/VCE from node voltages. IC through RC (ohmic check): {{ "%.4f"|format(sim_result.data.ic_from_rc_ohm * 1000) }} mA.</p>
+
+            {% if analytical %}
+              <h3 class="result-subhead">Lab 3 analytical reference — not SPICE</h3>
+              <table class="results comparison">
+                <tbody>
+                  <tr><th>IC (constant-β estimate)</th><td>{{ "%.4f"|format(analytical.ic * 1000) }} mA</td></tr>
+                  <tr><th>VCE (constant-β estimate)</th><td>{{ "%.4f"|format(analytical.vce) }} V</td></tr>
+                </tbody>
+              </table>
+              <p class="provenance-line">Separate values: the table above is the current ngspice run; this table is the Lab 03 approximation (β = 100, VBE = 0.70 V).</p>
+            {% endif %}
+          {% elif analysis == 'ac' %}
+            <h3 class="result-subhead">AC frequency response from ngspice</h3>
+            <table class="results">
+              <tbody>
+                <tr><th>Sweep</th><td>{{ "%.3g"|format(sim_result.summary.sweep_start_hz) }} – {{ "%.3g"|format(sim_result.summary.sweep_stop_hz) }} Hz</td></tr>
+                <tr><th>Points</th><td>{{ sim_result.summary.points }}</td></tr>
+                <tr><th>Peak gain</th><td>{{ "%.2f"|format(sim_result.summary.max_gain_db) }} dB</td></tr>
+                {% if sim_result.summary.gain_at_source_db is not none %}
+                  <tr><th>Gain at {{ "%.3g"|format(sim_result.parameters.frequency_hz) }} Hz</th><td>{{ "%.2f"|format(sim_result.summary.gain_at_source_db) }} dB</td></tr>
+                {% endif %}
+                {% if sim_result.summary.phase_at_source_deg is not none %}
+                  <tr><th>Phase at {{ "%.3g"|format(sim_result.parameters.frequency_hz) }} Hz</th><td>{{ "%.1f"|format(sim_result.summary.phase_at_source_deg) }}°</td></tr>
+                {% endif %}
+                {% if sim_result.summary.cutoff.lower_hz is defined %}
+                  <tr><th>Lower −3 dB</th><td>{{ "%.3g"|format(sim_result.summary.cutoff.lower_hz) }} Hz</td></tr>
+                {% endif %}
+                {% if sim_result.summary.cutoff.upper_hz is defined %}
+                  <tr><th>Upper −3 dB</th><td>{{ "%.3g"|format(sim_result.summary.cutoff.upper_hz) }} Hz</td></tr>
+                {% endif %}
+              </tbody>
+            </table>
+            {% if sim_result.summary.cutoff.note %}
+              <p class="model-note">{{ sim_result.summary.cutoff.note }}</p>
+            {% endif %}
+            <p class="provenance-line">Provenance: {{ sim_result.summary.vin_reference }} → {{ sim_result.summary.vout_reference }}; magnitude and phase are computed by ngspice from the current sweep.</p>
+          {% else %}
+            <h3 class="result-subhead">Transient response from ngspice</h3>
+            <table class="results">
+              <tbody>
+                <tr><th>Source amplitude</th><td>{{ "%.1f"|format(sim_result.parameters.amplitude_v * 1000) }} mV peak</td></tr>
+                <tr><th>Source frequency</th><td>{{ "%.3g"|format(sim_result.parameters.frequency_hz) }} Hz</td></tr>
+                <tr><th>Points</th><td>{{ sim_result.summary.points }}</td></tr>
+                <tr><th>Vin peak-to-peak</th><td>{{ "%.3f"|format(sim_result.summary.vin_peak_to_peak_v * 1000) }} mV</td></tr>
+                <tr><th>Vout peak-to-peak</th><td>{{ "%.3f"|format(sim_result.summary.vout_peak_to_peak_v) }} V</td></tr>
+                <tr><th>Phase relation</th><td>{{ sim_result.summary.phase_relation }}</td></tr>
+              </tbody>
+            </table>
+            <p class="provenance-line">Provenance: {{ sim_result.summary.vin_reference }} → {{ sim_result.summary.vout_reference }}; peak-to-peak values use the last 40% of the current transient run.</p>
+          {% endif %}
+
+          {% for name, svg in charts.items() %}
+            <figure class="chart">
+              {{ svg|safe }}
+              <figcaption>Plotted only from the parsed output of this ngspice run.</figcaption>
+            </figure>
+          {% endfor %}
+        {% else %}
+          <div class="status idle">
+            <span class="status-title">Waiting for ngspice run</span>
+            <span>Choose an analysis, enter values, then press Run ngspice. No results are invented.</span>
+          </div>
+        {% endif %}
+
+        <p class="model-note">Engine: {{ engine_name }} · model: {{ model_name }} · status shown above. The Lab 3 analytical workspace remains separate.</p>
+      </section>
+      {% endif %}
     </main>
 
     <footer class="goal">
-      <div class="goal-badge">3</div>
+      <div class="goal-badge">{{ 4 if workspace == 'simulator' else 3 }}</div>
       <div class="goal-text">
-        <h2>Week 3 Goal</h2>
-        <p>Analyse three BJT common-emitter DC bias circuits — voltage divider, fixed and emitter bias — and verify each operating point against hand calculations.</p>
+        <h2>Week {{ 4 if workspace == 'simulator' else 3 }} Goal</h2>
+        {% if workspace == 'simulator' %}
+          <p>Run real ngspice DC, AC and transient analyses of a common-emitter amplifier, then read the gain, phase, operating point and waveforms from the simulator output.</p>
+        {% else %}
+          <p>Analyse three BJT common-emitter DC bias circuits — voltage divider, fixed and emitter bias — and verify each operating point against hand calculations.</p>
+        {% endif %}
       </div>
     </footer>
   </div>
