@@ -99,6 +99,7 @@ body {
   font-weight: 600;
   line-height: 1.4;
   text-align: center;
+  text-wrap: pretty;
 }
 
 /* ---------- Three-column layout ---------- */
@@ -177,14 +178,15 @@ body {
 }
 
 .unit {
-  padding: 1px 7px;
+  padding: 2px 7px;
   border: 1px solid #d7e6f1;
   border-radius: 999px;
   background: #eef5fa;
   color: #35678c;
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
 }
 
 .field input {
@@ -210,16 +212,17 @@ body {
   width: 100%;
   margin-top: 16px;
   padding: 11px 16px;
-  border: 0;
   border-radius: 9px;
-  background: linear-gradient(135deg, #12988c, #0b6f79);
+  min-height: 44px;
+  border: 1px solid #0a6f72;
+  background: var(--teal-dark);
   color: #ffffff;
   font: inherit;
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
-  box-shadow: 0 7px 16px rgba(14, 143, 132, 0.25);
+  box-shadow: 0 7px 16px rgba(16, 54, 82, 0.18);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -249,6 +252,7 @@ body {
 
 .mode-select {
   width: 100%;
+  min-height: 44px;
   padding: 9px 11px;
   border: 1px solid #c9d9e6;
   border-radius: 8px;
@@ -267,6 +271,7 @@ body {
 
 .mode-button {
   flex: 0 0 auto;
+  min-height: 44px;
   padding: 10px 14px;
   border: 1px solid #c9d9e6;
   border-radius: 8px;
@@ -366,8 +371,9 @@ body {
 .schematic-caption {
   margin: 14px 0 0;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   text-align: center;
+  text-wrap: pretty;
 }
 
 /* ---------- Results ---------- */
@@ -413,29 +419,25 @@ body {
   flex-direction: column;
   gap: 3px;
   margin-top: auto;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 11px;
-  background: #f4f8fb;
+  padding: 11px 0 0;
+  border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.45;
 }
 
 .status-title {
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   font-weight: 800;
 }
 
 .status.ok {
-  border-color: var(--ok-line);
-  background: var(--ok-bg);
+  border-top-color: var(--ok-line);
   color: var(--ok-ink);
 }
 
 .status.warn {
-  border-color: var(--warn-line);
-  background: var(--warn-bg);
+  border-top-color: var(--warn-line);
   color: var(--warn-ink);
 }
 
@@ -446,8 +448,9 @@ body {
 .model-note {
   margin: 14px 0 0;
   color: var(--muted);
-  font-size: 0.74rem;
+  font-size: 0.82rem;
   line-height: 1.45;
+  text-wrap: pretty;
 }
 
 /* ---------- Messages ---------- */
@@ -485,7 +488,7 @@ body {
   margin-top: 22px;
   padding: 18px 24px;
   border-radius: 16px;
-  background: linear-gradient(120deg, #0f3b5c, #146a7c);
+  background: var(--navy);
   color: #ffffff;
   box-shadow: 0 12px 26px rgba(16, 54, 82, 0.18);
 }
@@ -588,6 +591,9 @@ body {
 }
 
 .workspace-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 9px 16px;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -618,16 +624,16 @@ body {
 
 .provenance {
   margin-top: 18px;
-  padding: 10px 12px;
-  border: 1px dashed #cbdce8;
-  border-radius: 9px;
-  background: #f8fbfd;
+  padding: 10px 0 0;
+  border-top: 1px dashed #9db9cc;
   color: var(--muted);
-  font-size: 0.77rem;
+  font-size: 0.8rem;
 }
 
 .provenance summary {
+  padding: 8px 0;
   color: #2b648c;
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -668,8 +674,9 @@ body {
 .provenance-line {
   margin: 10px 0 0;
   color: var(--muted);
-  font-size: 0.73rem;
+  font-size: 0.8rem;
   line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .chart {
@@ -689,8 +696,9 @@ body {
 .chart figcaption {
   margin-top: 6px;
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   text-align: center;
+  text-wrap: pretty;
 }
 
 .plot .grid {
@@ -708,11 +716,11 @@ body {
 .plot .axis-label {
   fill: #5d7488;
   font-family: "Segoe UI", Tahoma, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .plot .axis-label {
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 600;
 }
 

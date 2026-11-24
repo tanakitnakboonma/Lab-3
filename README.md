@@ -39,6 +39,14 @@ Lab 04 — transient ที่ 10 mV peak, 1 kHz (B5):
 
 ![Lab 04 transient result](docs/browser-b5-tran-10mv-1khz.png)
 
+Lab 04 — UI polish ด้วย Impeccable (ก่อน / หลัง):
+
+![Lab 04 before polish](docs/impeccable-before-desktop.png)
+
+![Lab 04 after polish](docs/impeccable-after-desktop.png)
+
+รายละเอียด detector, Lighthouse และหลักฐาน 390 px: `docs/impeccable-review.md`
+
 ## โครงสร้างโปรเจกต์
 
 ```
@@ -256,6 +264,7 @@ VCC = 12 V, RC = 2.2 kΩ, β = 100, VBE = 0.70 V
 | โครงสร้างและ Python (แยกฟังก์ชัน, เลือกตามโหมด, dict) | `dc_bias.py`, `app.py`, `docs/design-note.md` §2–§5 |
 | วิศวกรรมและการคงผลเดิม | `docs/validation.md` §1 และ §7 B1, `tests/` (50 tests), ค่า A1 ตรงกับ Lab 02 |
 | ตรวจฟอร์มและผลจาก Browser | `docs/validation.md` §2 และ §7, `docs/browser-*.jpeg/png` |
+| UI และ Impeccable ก่อน/หลัง | `docs/impeccable-review.md`, `docs/impeccable-before-desktop.png`, `docs/impeccable-after-desktop.png`, `docs/impeccable-after-mobile-390px.png`; detector `[]`, Lighthouse 1.00/1.00/1.00 |
 | จำลองจริง ไม่ใช่ค่า hard-code | `spice_engine.py`, `docs/validation.md` §7 (B2–B7), netlist + log + trace ที่เปลี่ยนตาม input |
 | ส่งงานและทำซ้ำได้ | `README.md`, GitHub URL + commit SHA, `docs/superpowers/` |
 
